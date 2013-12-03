@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project name="GLStaticPatcher" default="create_jar">
+
+	<property name="version" value="1.0" />
+    <property name="build" value="0" />
+
+	<property name="project.dir" location=".." />
+	<property name="base.dir" location="../../.." />
+	<property name="build.dir" location="${base.dir}/build" />
+	<property name="stage.dir" location="${build.dir}/stage/${ant.project.name}/${version}.${build}" />
+	<property name="dist.dir" location="${build.dir}/dist" />
+
+	<property name="author" value="Mumfrey" />
+
+	<target name="pre">
+		<delete dir="${stage.dir}" />
+		<mkdir dir="${stage.dir}" />
+	</target>
+
+	<target name="build" depends="pre">
+		<javac destdir="${stage.dir}" includeantruntime="false">
+			<src path="${project.dir}/java" />
+			<classpath path="${project.dir}/lib/guava-15.0.jar" />
+		</javac>
+	</target>
+
+	<target name="create_jar" depends="build">
+		<delete file="${dist.dir}/${ant.project.name}-${version}.${build}.jar" />
+		<jar destfile="${dist.dir}/${ant.project.name}-${version}.${build}.jar" filesetmanifest="merge" index="true" manifestencoding="UTF-8">
+			<manifest>
+				<attribute name="Main-Class" value="com.mumfrey.mcptools.GLStaticPatcher" />
+				<attribute name="Implementation-Vendor" value="${author}" />
+				<attribute name="Implementation-Title" value="${ant.project.name}" />
+			</manifest>
+			<fileset dir="${stage.dir}" />
+			<zipfileset src="${project.dir}/lib/guava-15.0.jar" >
+				<exclude name="META-INF/*"/>
+			</zipfileset>
+		</jar>
+	</target>
+</project>
