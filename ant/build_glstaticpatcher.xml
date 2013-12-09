@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project name="GLStaticPatcher" default="create_jar">
 
-	<property name="version" value="1.0" />
+	<property name="version" value="1.1" />
     <property name="build" value="0" />
 
 	<property name="project.dir" location=".." />
@@ -23,8 +23,14 @@
 			<classpath path="${project.dir}/lib/guava-15.0.jar" />
 		</javac>
 	</target>
+	
+	<target name="stage" depends="build">
+		<copy todir="${stage.dir}">
+			<fileset dir="${project.dir}/res" />
+		</copy>
+	</target>
 
-	<target name="create_jar" depends="build">
+	<target name="create_jar" depends="build, stage">
 		<delete file="${dist.dir}/${ant.project.name}-${version}.${build}.jar" />
 		<jar destfile="${dist.dir}/${ant.project.name}-${version}.${build}.jar" filesetmanifest="merge" index="true" manifestencoding="UTF-8">
 			<manifest>
