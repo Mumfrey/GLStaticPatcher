@@ -26,7 +26,7 @@ public class GLStaticPatcher implements FilenameFilter
 	/**
 	 * Version string
 	 */
-	public static final String VERSION = "1.1.0";
+	public static final String VERSION = "1.1.1";
 	
 	/**
 	 * Pattern used to represent regular imports that we want to match
@@ -71,7 +71,7 @@ public class GLStaticPatcher implements FilenameFilter
 
 	public void run()
 	{
-		System.out.printf("Running in %s\n", baseDir.getAbsolutePath());
+		System.out.printf("Running in %s\n", this.baseDir.getAbsolutePath());
 		
 		this.startTime = System.currentTimeMillis();
 		this.processDir(this.baseDir);
